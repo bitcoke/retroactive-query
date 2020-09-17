@@ -23,7 +23,7 @@ jobs:
           bq --location=US mk \
           --dataset \
           --default_table_expiration 604800 \
-          --description "@uniswap/retroactive-query output for commit ${{ github.sha }}" \
+          --description "@bitcoke/retroactive-query output for commit ${{ github.sha }}" \
           'uni-table-289806':retroactive_${{ github.sha }}
 
   run-queries:
