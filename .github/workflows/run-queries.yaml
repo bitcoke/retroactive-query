@@ -14,8 +14,8 @@ jobs:
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: '309.0.0'
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: 'uni-table-289806'
+          service_account_key: '164237216f7a6d97df908d02af543a76250c4488'
           export_default_credentials: true
 
       - name:
@@ -24,7 +24,7 @@ jobs:
           --dataset \
           --default_table_expiration 604800 \
           --description "@uniswap/retroactive-query output for commit ${{ github.sha }}" \
-          ${{ secrets.GCP_PROJECT_ID }}:retroactive_${{ github.sha }}
+          'uni-table-289806':retroactive_${{ github.sha }}
 
   run-queries:
     needs: create-dataset
@@ -55,14 +55,14 @@ jobs:
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: '309.0.0'
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          project_id: 'uni-table-289806'
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
       - name:
         run: |
           cat ${{ matrix.schema.file }} | \
-          bq --location=US --dataset_id=${{ secrets.GCP_PROJECT_ID }}:retroactive_${{ github.sha }} query \
+          bq --location=US --dataset_id='uni-table-289806':retroactive_${{ github.sha }} query \
           --parameter='cutoff_timestamp:TIMESTAMP:2020-09-01 00:00:00+00' \
           --parameter='cutoff_block_number:INT64:10771925' \
           --parameter='socks_user_reward:FLOAT64:1000' \
